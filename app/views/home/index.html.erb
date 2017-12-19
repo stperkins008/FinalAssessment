@@ -1,0 +1,28 @@
+<div align="center">
+<h1>Welcome <%= current_user.name %>, here are all of the articles.</h1>
+</div>
+
+<% @articles.each do |x| %>
+	<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h1><%= link_to x.title, x %></h1>
+				</div>
+				<div class="panel-body">
+					Submitted by: <%= x.user.name %><br>
+					<p><i>Created at: <%= x.created_at.strftime('%m/%d/%Y at %I:%M%p') %></i></p>
+					<p><%= x.body %></p>
+				</div>
+				<div class="panel-footer">
+					<% if current_user.id == x.user_id %>
+					<%= link_to "Show", article_path(x), class: "btn btn-info" %>
+					<%= link_to "Edit", edit_article_path(x), class: "btn btn-warning" %>
+					<%= link_to "Destroy", article_path(x), method: :delete, data: { confirm: "Are you sure?"}, class: "btn btn-danger" %>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	<% end %>
+
+<%= link_to "New Article", new_article_path, class: "btn btn-success" %>
+
